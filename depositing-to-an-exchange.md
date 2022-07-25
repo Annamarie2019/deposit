@@ -1,6 +1,6 @@
 # Depositing to an Exchange
 
-To deposit to the Exchange, the [Exchange server](https://docs.flare.network/exchange/architecture/#architecture-of-an-exchange) monitors and discovers submitted transactions and makes sure they are unlikely to be reverted.
+To deposit to an Exchange, the [Exchange server](https://docs.flare.network/exchange/architecture/#architecture-of-an-exchange) monitors and discovers submitted transactions and makes sure they are unlikely to be reverted.
 
 Availability of cryptocurrency for a deposit needs to be verified on a blockchain just as availability of fiat currency needs to be verified for a bank.
 However, making sure it is "unlikely to be reverted" is blockchain-specific.
