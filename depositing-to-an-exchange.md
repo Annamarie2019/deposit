@@ -1,19 +1,21 @@
 # Depositing to an Exchange
 
-To deposit to an Exchange, the [Exchange server](https://docs.flare.network/exchange/architecture/#architecture-of-an-exchange) monitors and discovers submitted transactions and makes sure they are unlikely to be reverted.
+To deposit to an Exchange, enable the [Exchange server](https://docs.flare.network/exchange/architecture/#architecture-of-an-exchange) to monitor and discover submitted transactions and make sure they are unlikely to be reverted.
 
 Availability of cryptocurrency for a deposit needs to be verified on a blockchain just as availability of fiat currency needs to be verified for a bank.
 However, making sure it is "unlikely to be reverted" is blockchain-specific.
-On a blockchain, newly created transactions are being examined by validators and could be reverted.
-Once a transaction is validated and added to a block, the block is identified by a one-way cryptographic algorithm and transactions cannot be retrieved by decryption.
-Therefore, we confirm deposits that are several blocks back, for example, five blocks back.
+On a blockchain, validators examine newly created transactions and could revert them.
+Once a set of transactions is validated and added to a block, the block is identified by a one-way cryptographic algorithm and transactions cannot be reverted.
+Because of the temporary instability during validation, it is more reliable to confirm deposits that are several blocks back, for example, five blocks back.
 
 While the validators are reaching agreement, the Exchange server labels a deposit "pending."
 Once the validators agree that the deposit is legitimate and add it to a block, the Exchange server labels it "confirmed."
 
 Run the javascript below to see pending transactions and confirmed transactions with the block number they were added to.
 
-<!-- Here are some definitions of terms that will help you understand the process and the code below.
+<!-- Instead of having these in this article, we may want to link to the glossary and add any terms not in the glossary. We may want to consider some high-level blockchain articles that apply to all types of transactions and link to them. -->
+
+<!-- Here are some definitions of terms that will help you understand the process and the code below. 
 
 | Term | Description |
 | ----------- | ----------- |
@@ -46,7 +48,7 @@ When there is a quorum among all validators regarding a given block of transacti
 
 1. Install [node.js](https://nodejs.org/en/download/). On the command line, run `node -v`  to check your installation.
 
-<!-- My own instance with the test server? -->
+<!-- Your own instance with the test server? -->
 
 2. Clone the Flare repository: <!-- see https://github.com/flare-foundation/flare -->
 
@@ -60,7 +62,7 @@ cd flare`
 ## Run the Code
 
 cd to <!-- the cloned flare repository -->
-Run node ... scripts/createLocal ?
+Run a node: `scripts/createLocal` <!-- ? -->
 
 Leave this node running on a separate terminal before running the code.
 
@@ -69,6 +71,8 @@ Leave this node running on a separate terminal before running the code.
 To discover newly submitted transactions, subscribe to the `pending transactions` event.
 
 Use your own node URL (See https://docs.flare.network/dev/reference/coston-testnet/) and your own wallet address to run this code:
+
+<!-- Do I want to change any comments? -->
 
 ```javascript
 // https://web3js.readthedocs.io
@@ -100,15 +104,13 @@ In the console log, you can see which transactions were discovered and are pendi
 
 For example,
 
-<!-- I want to run this and get an example with the hash and block number. -->
-
 ```javascript
-"Transaction <tx.hash> is pending"
+Transaction 0xc3f3836b9fbe867d460b70258793e6601e4ffcb7f44203e8f40aca995ec21feb is pending
 ```
 
 ### Verify that Transactions Are Unlikely to be Reverted
 
-To ensure that blocks are old enough to be unlikely to be reverted, run this code to subscribe to the `newBlockHeaders` event and examine transactions i5 blocks back.
+To ensure that blocks are old enough to be unlikely to be reverted, run this code to subscribe to the `newBlockHeaders` event and examine transactions 5 blocks back.
 
 ```javascript
 web3.eth.subscribe("newBlockHeaders")
@@ -137,10 +139,8 @@ In the console log, you can see which transactions were confirmed and which bloc
 
 For example,
 
-<!-- I want to run this and get an example with the hash and block number. -->
-
 ```javascript
-"Transaction <tx.hash> is confirmed in block <block.number>"
+Transaction 0xc3f3836b9fbe867d460b70258793e6601e4ffcb7f44203e8f40aca995ec21feb is confirmed in block 4305057
 ```
 
-<!-- Is "Success" status relevant here or is "Success" for a stage after "confirmed"? See [Transaction Status](https://github.com/flare-foundation/multi-chain-client/blob/main/docs/definitions/transaction-status.md) for error handling messages. -->
+<!-- Is there more we want to say about error codes. See [Transaction Status](https://github.com/flare-foundation/multi-chain-client/blob/main/docs/definitions/transaction-status.md) for some error handling messages. -->
