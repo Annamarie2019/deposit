@@ -61,10 +61,11 @@ cd flare`
 
 ## Run the Code
 
-cd to <!-- the cloned flare repository -->
-Run a node: `scripts/createLocal` <!-- ? -->
+1. `cd` to < the cloned flare repository >
 
-Leave this node running on a separate terminal before running the code.
+2. Run a node: `scripts/createLocal` <!-- ? -->
+
+Leave this node running on a separate terminal while running the code.
 
 ### Discover Newly Submitted Transactions
 
