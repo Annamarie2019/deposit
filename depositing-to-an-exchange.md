@@ -1,15 +1,17 @@
-# Depositing to an Exchange
+# Depositing to the Exchange
 
-To deposit to an Exchange, enable the [Exchange server](https://docs.flare.network/exchange/architecture/#architecture-of-an-exchange) to monitor and discover submitted transactions and make sure they are unlikely to be reverted.
+To deposit to the Exchange, enable the [Exchange server](https://docs.flare.network/exchange/architecture/#architecture-of-an-exchange) to monitor and discover submitted transactions and make sure they are unlikely to be reverted.
 
 Availability of cryptocurrency for a deposit needs to be verified on a blockchain just as availability of fiat currency needs to be verified for a bank.
 However, making sure it is "unlikely to be reverted" is blockchain-specific.
 On a blockchain, validators examine newly created transactions and could revert them.
-Once a set of transactions is validated and added to a block, the block is identified by a one-way cryptographic algorithm and transactions cannot be reverted.
-Because of the temporary instability during validation, it is more reliable to confirm deposits that are several blocks back, for example, five blocks back.
+Once a set of transactions is validated and added to a block, the block is identified by a one-way cryptographic algorithm and the transactions cannot be reverted.
+Because the older blocks are irreversible, we confirm deposits several blocks back, for example, five blocks back.
+
+<!-- Or is that the validation exactly the same as a bank's for our purposes, but the only difference is that a set of computer programs ("validators") are validating the process. The main difference affecting the process is why we have to go back 5 blocks, and this is because blocks are irreversible....Why are the newly created blocks potentially reversible? -->
 
 While the validators are reaching agreement, the Exchange server labels a deposit "pending."
-Once the validators agree that the deposit is legitimate and add it to a block, the Exchange server labels it "confirmed."
+Once the validators agree that the deposit is legitimate, the Exchange server labels it "confirmed."
 
 Run the javascript below to see pending transactions and confirmed transactions with the block number they were added to.
 
