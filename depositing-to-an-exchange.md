@@ -96,7 +96,6 @@ web3.eth.subscribe("pendingTransactions")
         console.log("Transaction", tx.hash, "is pending");
     }
 }).on("error", console.error);
-<!-- Do we have more information on possible error codes, such as Transaction Status](https://github.com/flare-foundation/multi-chain-client/blob/main/docs/definitions/transaction-status.md) -->
 
 web3.eth.subscribe("newBlockHeaders")
 // When a new block has been produced.
@@ -117,6 +116,8 @@ web3.eth.subscribe("newBlockHeaders")
     });
 }).on("error", console.error);
 ```
+<!-- Do we have more information on possible error codes, such as Transaction Status](https://github.com/flare-foundation/multi-chain-client/blob/main/docs/definitions/transaction-status.md) -->
+
 ### Outcome
 
 In the console log, you can see which transactions were pending and which are confirmed and the block number they are in.
