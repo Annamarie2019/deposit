@@ -1,87 +1,84 @@
-# Depositing to the Exchange
+# Confirming a Deposit to an Exchange
 
-To deposit to the Exchange, enable the [Exchange server](https://docs.flare.network/exchange/architecture/#architecture-of-an-exchange) to monitor and discover submitted transactions and make sure they are unlikely to be reverted.
+Run the code below to have an [exchange server](https://docs.flare.network/exchange/architecture/#architecture-of-an-exchange) listen for submitted deposit transactions and make sure they are unlikely to be reverted.
 
-Availability of cryptocurrency for a deposit needs to be verified on a blockchain just as availability of fiat currency needs to be verified for a bank.
-However, making sure it is "unlikely to be reverted" is blockchain-specific.
-On a blockchain, validators examine newly created transactions and could revert them.
-Once a set of transactions is validated and added to a block, the block is identified by a one-way cryptographic algorithm and the transactions cannot be reverted.
-Because the older blocks are irreversible, we confirm deposits several blocks back, for example, five blocks back.
+On a blockchain, multiple validators examine newly created transactions and come to an agreement about whether they are valid. 
+When they are valid, they are added to a new block on the chain and identified by a one-way cryptographic algorithm, called a _hash_. 
+The one-way hash prevents the transactions from being reverted. 
+Blocks are added to the blockchain in chronological order and it may take a few blocks for the hash to be completed.
+To prevent problems, we confirm deposits several blocks back, for example, five blocks back, when the blocks are most likely to be irreversible.
 
-<!-- Or is that the validation exactly the same as a bank's for our purposes, but the only difference is that a set of computer programs ("validators") are validating the process. The main difference affecting the process is why we have to go back 5 blocks, and this is because blocks are irreversible....Why are the newly created blocks potentially reversible? -->
+<!-- The [Architecture of an Exchange doc](https://docs.flare.network/exchange/architecture/) says, "To avoid problems, the Exchange should only act on transactions appearing on blocks old enough for the chance of them being reverted to be negligible."  Is this doc referring to the fact that blocks are irreversible except in the case of a severe attack when an ecosystem might agree to fork. Am I on the right track? 
+I have never heard of a period where they could possibly be reverted, so I'm imagining that is the brief moment waiting for the cryptographic hash to be in place, yes?  -->
 
-While the validators are reaching agreement, the Exchange server labels a deposit "pending."
-Once the validators agree that the deposit is legitimate, the Exchange server labels it "confirmed."
+Transactions that are newly submitted deposit to our receiving address are labeled "pending."
+After five blocks have been created, the deposit is labeled "confirmed."
 
-Run the javascript below to see pending transactions and confirmed transactions with the block number they were added to.
+Run the javascript below to see pending and confirmed transactions and which block number they were added to.
 
-<!-- Instead of having these in this article, we may want to link to the glossary and add any terms not in the glossary. We may want to consider some high-level blockchain articles that apply to all types of transactions and link to them. -->
-
-<!-- Here are some definitions of terms that will help you understand the process and the code below. 
+<!-- I don't think this article should be a primer on blockchain, so I limited blockchain explanation to only what they need to know for this procedure. Ideally, we would have high-level blockchain concepts so we don't have to repeat the concepts for every article that they apply to. 
+The existing glossary definitions are part of that. 
+Here are a few more definitions that I would recommend adding to the glossary: 
 
 | Term | Description |
 | ----------- | ----------- |
 | address | The address of a wallet where assets can be stored.
 Represented by a hash. |
-| block | A unit of the blockchain.
-For performance reasons, blockchains do not process transactions one by one.
-Instead, transactions are grouped together in blocks which are then validated by the consensus algorithm. |
-| blockchain | A digital ledger storing data and transactions on a distributed network of computers to make it more robust. |
-| block header | Data about the block, including a timestamp of when the block was a created, a hash representing the address of the previous block, a Merkle root hash (a cryptographic hash of all of the transactions included in the block) |
+| block header | Data about the block, including a timestamp of when the block was a created, a hash representing the address of the previous block, and a Merkle root hash (a cryptographic hash of all of the transactions included in the block) |
 | block number | Blocks are numbered sequentially in chronological order of creation |
-| consensus | Instead of having an intermediary representing a centralized bank, a decentralized blockchain is validated by members with that responsibility. |
-| Coston | The name given to the Flare public test network launched in January 2021, in remembrance of a great inventor, Martha J. Coston (1826-1904). |
-| hash | An output of a string of a fixed size derived from the transformation of data of any length. `tx.hash` is the hash of the transaction.
+| hash | An output of a string of a fixed size derived from the transformation of data of any length. 
+`tx.hash` is the hash of the transaction.
 It is generated by a one-way cryptographic algorithm, for which the original data cannot be retrieved by decryption.
-Hashing stores passwords and prevents fraudulent transactions and double spending in blockchain.|
+Hashing stores passwords and prevents fraudulent transactions and double spending in blockchain. |
 | node | A programmed participant in the network that can interact with other nodes.
-Each node might have different responsibilities such as client or validator. |
-| testnet |The computer network that supports a blockchain in its development stage. It is intended for testing purposes and should not store valuable assets, as its contents might be deleted (purposely or by accident) at any time.
-Flare's testnet is called Coston. |
-| transaction | An entry on the distributed ledger, once validated cannot be reverted.
-It can be a movement of funds between two accounts, or the execution of a contract, for example. `tx`|
-| transactionHash | A name derived by cryptographic hashing.
-A change in the data of a block, i.e., a transaction, creates a new block with a new hash. |
-| validator |A validator node is a machine connected to a blockchain network that verifies transactions and emits a vote.
-When there is a quorum among all validators regarding a given block of transactions, they are accepted into the blockchain. |
+Each node has different responsibilities, such as client or validator. |
 -->
 
 ## One-Time Setup
 
 1. Install [node.js](https://nodejs.org/en/download/). On the command line, run `node -v`  to check your installation.
 
-<!-- Your own instance with the test server? -->
-
-2. Clone the Flare repository: <!-- see https://github.com/flare-foundation/flare -->
+2. Clone the Flare repository: 
 
 `git clone https://github.com/flare-foundation/flare.git
 cd flare`
+
+See [the Flare repository on GitHub](https://github.com/flare-foundation/flare).
+
+<!-- The Architecture page says "Your own instance with the test server" Is this relevant here? -->
 
 3. Build Flare with this script:
 
 `./scripts/build.sh`
 
+<!-- Looked like the script started, but then failed at line 16:
+
+```
+annemarie@ANNEs-MacBook-Pro flare % ./scripts/build.sh
+Downloading dependencies...
+./scripts/build.sh: line 16: go: command not found
+```
+What else do we need to know here? -->
+
 ## Run the Code
 
-1. `cd` to < the cloned flare repository >
+1. `cd` to `flare`
 
-2. Run a node: `scripts/createLocal` <!-- ? -->
+2. Run the code: <!-- How do they run this file? I've seen people run files in the cli, but I don't know how to do it. I created a file and ran `npm run confirm-deposit.js`, but it didn't work. ->
 
-Leave this node running on a separate terminal while running the code.
+The following code does these things:
 
-### Discover Newly Submitted Transactions
-
-To discover newly submitted transactions, subscribe to the `pending transactions` event.
-
-Use your own node URL (See https://docs.flare.network/dev/reference/coston-testnet/) and your own wallet address to run this code:
-
-<!-- Do I want to change any comments? -->
+* Sets up the code by instantiating `web3`, assigning the endpoint URL, and assigning the `receivingAddress`
+* Subscribes to 'pending transactions` to listen for deposit transactions and, if they are sent to the receiving address, labels them as "pending."
+* Subscribes to 'newBlockHeaders` to get a block that is five blocks back from the block with the pending transactiions and labels it as "confirmed."
+ 
+<!-- Since multiple transactions may be added to a block at a time, are we marking 1 pending transaction at at time, and then the entire set (1 or more) of confirmed transactions in a block? How does that work? --> 
 
 ```javascript
-// https://web3js.readthedocs.io
+// https://web3js.readthedocs.io <!-- This is a really big document. Is there specific doc that is relevant here? --> 
 const Web3 = require('web3');
 
-// Use your own node URL
+// Use your own node URL <!-- They can test it as is, yes? Their own node URL would be for actual run time, yes? -->
 // https://docs.flare.network/dev/reference/coston-testnet/
 const web3 = new Web3("wss://coston-api.flare.network/ext/bc/C/ws");
 
@@ -89,8 +86,8 @@ const web3 = new Web3("wss://coston-api.flare.network/ext/bc/C/ws");
 const receivingAddress = "0x947c76694491d3fD67a73688003c4d36C8780A97";
 
 web3.eth.subscribe("pendingTransactions")
+// When a new transaction hash is received...
 .on("data", async (transactionHash) => {
-    // New transaction hash received.
     // Retrieve the actual transaction.
     let tx = await web3.eth.getTransaction(transactionHash);
     // If it is directed to our address...
@@ -99,30 +96,15 @@ web3.eth.subscribe("pendingTransactions")
         console.log("Transaction", tx.hash, "is pending");
     }
 }).on("error", console.error);
-```
+<!-- Do we have more information on possible error codes, such as Transaction Status](https://github.com/flare-foundation/multi-chain-client/blob/main/docs/definitions/transaction-status.md) -->
 
-#### Outcome
-
-In the console log, you can see which transactions were discovered and are pending.
-
-For example,
-
-```javascript
-Transaction 0xc3f3836b9fbe867d460b70258793e6601e4ffcb7f44203e8f40aca995ec21feb is pending
-```
-
-### Verify that Transactions Are Unlikely to be Reverted
-
-To ensure that blocks are old enough to be unlikely to be reverted, run this code to subscribe to the `newBlockHeaders` event and examine transactions 5 blocks back.
-
-```javascript
 web3.eth.subscribe("newBlockHeaders")
+// When a new block has been produced.
 .on("data", async (blockHeader) => {
-    // New block has been produced.
     // Retrieve a block old enough to be considered confirmed.
     let block = await web3.eth.getBlock(blockHeader.number - 5);
 
-    // Get all its transactions.
+    // Get all of its transactions.
     block.transactions.forEach(async (transactionHash) => {
         // Retrieve the actual transaction.
         let tx = await web3.eth.getTransaction(transactionHash);
@@ -135,15 +117,16 @@ web3.eth.subscribe("newBlockHeaders")
     });
 }).on("error", console.error);
 ```
+### Outcome
 
-#### Outcome
-
-In the console log, you can see which transactions were confirmed and which block number they are in.
+In the console log, you can see which transactions were pending and which are confirmed and the block number they are in.
 
 For example,
 
 ```javascript
+Transaction 0xc3f3836b9fbe867d460b70258793e6601e4ffcb7f44203e8f40aca995ec21feb is pending
 Transaction 0xc3f3836b9fbe867d460b70258793e6601e4ffcb7f44203e8f40aca995ec21feb is confirmed in block 4305057
 ```
 
-<!-- Is there more we want to say about error codes. See [Transaction Status](https://github.com/flare-foundation/multi-chain-client/blob/main/docs/definitions/transaction-status.md) for some error handling messages. -->
+The server is ready to move on to the next step: Check the wallet address to find which user account it belongs to.
+
