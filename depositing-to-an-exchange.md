@@ -2,17 +2,17 @@
 
 Run the code below to have an [exchange server](https://docs.flare.network/exchange/architecture/#architecture-of-an-exchange) listen for submitted deposit transactions and make sure they are unlikely to be reverted.
 
-On a blockchain, multiple validators examine newly created transactions and come to an agreement about whether they are valid. 
+On a blockchain, multiple [validators](https://docs.flare.network/tech/glossary/) examine newly created transactions and come to an agreement about whether they are valid. 
 When they are valid, they are added to a new block on the chain and identified by a one-way cryptographic algorithm, called a _hash_. 
-The one-way hash prevents the transactions from being reverted. 
-Blocks are added to the blockchain in chronological order and it may take a few blocks for the hash to be completed.
+The one-way hash prevents transactions from being reverted. 
+[Blocks](https://docs.flare.network/tech/glossary/) are added to the [blockchain](https://docs.flare.network/tech/glossary/) in chronological order and it may take a few blocks for the hash to be completed.
 To prevent problems, we confirm deposits several blocks back, for example, five blocks back, when the blocks are most likely to be irreversible.
 
 <!-- The [Architecture of an Exchange doc](https://docs.flare.network/exchange/architecture/) says, "To avoid problems, the Exchange should only act on transactions appearing on blocks old enough for the chance of them being reverted to be negligible."  Is this doc referring to the fact that blocks are irreversible except in the case of a severe attack when an ecosystem might agree to fork. Am I on the right track? 
 I have never heard of a period where they could possibly be reverted, so I'm imagining that is the brief moment waiting for the cryptographic hash to be in place, yes?  -->
 
-Transactions that are newly submitted deposit to our receiving address are labeled "pending."
-After five blocks have been created, the deposit is labeled "confirmed."
+Transactions that are a newly submitted deposit to our receiving address are labeled "pending."
+After five blocks have been created, valid deposits are labeled "confirmed."
 
 Run the javascript below to see pending and confirmed transactions and which block number they were added to.
 
