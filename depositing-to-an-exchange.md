@@ -64,7 +64,9 @@ What else do we need to know here? -->
 
 1. `cd` to `flare`
 
-2. Run the code: <!-- How do they run this file? I've seen people run files in the cli, but I don't know how to do it. I created a file and ran `npm run confirm-deposit.js`, but it didn't work. ->
+2. Run the code: 
+
+<!-- How do they run this file? I've seen people run files in the cli, but I don't know how to do it. I created a file and ran `npm run confirm-deposit.js`, but it didn't work. ->
 
 The following code does these things:
 
@@ -74,8 +76,10 @@ The following code does these things:
  
 <!-- Since multiple transactions may be added to a block at a time, are we marking 1 pending transaction at at time, and then the entire set (1 or more) of confirmed transactions in a block? How does that work? --> 
 
+<!-- The first link is a really big document. Is there specific doc that is relevant here? --> 
+
 ```javascript
-// https://web3js.readthedocs.io <!-- This is a really big document. Is there specific doc that is relevant here? --> 
+// https://web3js.readthedocs.io 
 const Web3 = require('web3');
 
 // Use your own node URL <!-- They can test it as is, yes? Their own node URL would be for actual run time, yes? -->
