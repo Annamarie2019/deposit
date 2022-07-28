@@ -113,5 +113,5 @@ Transaction 0xc3f3836b9fbe867d460b70258793e6601e4ffcb7f44203e8f40aca995ec21feb i
 Transaction 0xc3f3836b9fbe867d460b70258793e6601e4ffcb7f44203e8f40aca995ec21feb is confirmed in block 4305057
 ```
 
-The server is ready to move on to the next step: Check the wallet address to find the user account it belongs to.
+The server is ready to move on to the next step: Check the wallet address to find the user account it belongs to (step 3 of [Detecting Deposits](https://docs.flare.network/exchange/architecture/#detecting-deposits). 
 
