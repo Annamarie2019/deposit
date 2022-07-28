@@ -1,8 +1,8 @@
-# Confirm Deposits to the Exchange
+# Confirm Deposits to an Exchange
 
 Deposits are made in several stages. 
-After the user deposits funds to their assigned reception wallet (step 1 in [Detecting Deposits](https://docs.flare.network/exchange/architecture/#detecting-deposits)), the [Exchange server](https://docs.flare.network/exchange/architecture/#architecture-of-an-exchange) monitors for deposits and updates the Balances database. 
-Run the code below to have the Exchange server listen for deposit transactions and confirm the deposits.
+After the user deposits funds to their assigned reception wallet (step 1 in [Detecting Deposits](https://docs.flare.network/exchange/architecture/#detecting-deposits)), an [exchange server](https://docs.flare.network/exchange/architecture/#architecture-of-an-exchange) monitors for deposits and updates the Balances database. 
+Run the code below to have an exchange server listen for deposit transactions and confirm the deposits.
 
 On a [blockchain](https://docs.flare.network/tech/glossary/), multiple [validators](https://docs.flare.network/tech/validators/) examine newly created transactions and decide on whether they are valid and which [block](https://docs.flare.network/tech/glossary/) to add to the chain next. 
 Since it takes time for all validators to agree, there is a period of time in which they might add or revert transactions to a block.
