@@ -5,14 +5,12 @@ After the user deposits funds to their assigned reception wallet (step 1 in [Det
 Run the code below to have the Exchange server listen for deposit transactions and confirm the deposits.
 
 On a [blockchain](https://docs.flare.network/tech/glossary/), multiple [validators](https://docs.flare.network/tech/validators/) examine newly created transactions and decide on whether they are valid and which [block](https://docs.flare.network/tech/glossary/) to add to the chain next. 
-It takes time for all the validators to agree. 
-Until they reach agreement, validators may add or revert transactions to a block. 
-After the validation process is complete, reversing a transaction is very unlikely. 
-To avoid the risk of confirming a block that could be reverted, confirm deposits several blocks back (for example, five blocks back as in the code below). 
-Older blocks are less likely to be reverted.
+Since it takes time for all validators to agree, there is a period of time in which they might add or revert transactions to a block.
+After the validation process is complete, reversing a transaction is very unlikely.
+To avoid the risk of accepting a deposit from a block that could be later reverted, only transactions that are a few blocks old are considered (for example, five blocks back as in the code below). 
 
 Newly submitted deposits to the receiving address are labeled "pending."
-After five more blocks have been created, valid deposits are labeled "confirmed."
+After five more blocks have been created, valid deposits are then labeled "confirmed."
 
 Run the code below to see pending and confirmed transactions and which block number they were added to.
 
@@ -51,8 +49,8 @@ Run the code below to see pending and confirmed transactions and which block num
 
 The following code:
 
-* Sets up the deposit by instantiating `web3`, assigning the endpoint URL, and assigning the `receivingAddress`
-* Subscribes to `pending transactions` to listen for deposit transactions and, if they are sent to the receiving address, labels them as "pending."
+* Sets up the deposit by instantiating `web3`, assigning the endpoint URL, and assigning the `receivingAddress`.
+* Subscribes to `pendingTransactions` to listen for deposit transactions and, if they are sent to the receiving address, labels them as "pending."
 * Subscribes to `newBlockHeaders` to get a block that is five blocks back from the block with the pending transactions. 
 If they are sent to the receiving address, it labels each transaction as "confirmed" and provides the block number.
 
@@ -113,7 +111,7 @@ To run the code,
    node <name of file>.txt
    ```
 
-### Outcome
+## Outcome
 
 You can see which transactions are pending and which are confirmed and the block number they are in.
 
