@@ -33,7 +33,9 @@ Run the code below to see pending and confirmed transactions and which block num
 
 3. Install the web3.js library: 
 
-   `npm install web3`
+   ```
+   npm install web3
+   ```
 
    Run `npm web3 -v`  to check your installation.
 
@@ -41,7 +43,9 @@ Run the code below to see pending and confirmed transactions and which block num
 
 4. Build Flare with this script:
 
-   `./scripts/build.sh`
+   ```
+   ./scripts/build.sh
+   ```
 
 ## Run the Code
 
@@ -54,7 +58,7 @@ If they are sent to the receiving address, it labels each transaction as "confir
 
 To run the code,
 
-1. Save the code to a .js file in your flare folder. 
+1. Save the code to a .txt file in your flare folder. 
 
    ```javascript
    // You must have web3 installed 
@@ -103,7 +107,11 @@ To run the code,
 
 2. `cd` to `flare`
 
-3. Run `node <name of file>.js`
+3. Run: 
+
+   ```
+   node <name of file>.txt
+   ```
 
 ### Outcome
 
@@ -116,5 +124,5 @@ Transaction 0x57b7c9e13836b32ac8a65e23f140fe5ab022894a7546393757043dd3c3b8e20c i
 Transaction 0x5819ad1bc4f5837c436599589e1ca2ddeac55c7a6c61908c1f64984887af43a3 is confirmed in block 4452518
 ```
 
-The server is ready to move on to the next step: Check the wallet address to find the user account it belongs to (step 3 of [Detecting Deposits](https://docs.flare.network/exchange/architecture/#detecting-deposits). 
+The server is ready to move on to the next step: Check the wallet address to find the user account it belongs to (step 3 of [Detecting Deposits](https://docs.flare.network/exchange/architecture/#detecting-deposits)). 
 
