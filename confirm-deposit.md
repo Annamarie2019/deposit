@@ -1,19 +1,19 @@
-# Confirm a Deposit to the Exchange
+# Confirm Deposits to the Exchange
 
 Deposits are made in several stages. 
 One of the stages is to go through the [Exchange server](https://docs.flare.network/exchange/architecture/#architecture-of-an-exchange), which monitors for deposits and updates the Balances database. 
 Run the code below to have the Exchange server listen for deposit transactions and confirm the deposits.
 
-On a blockchain, multiple [validators](h[ttps://docs.flare.network/tech/glossary/](https://docs.flare.network/tech/validators/)) examine newly created transactions and come to an agreement about whether they are valid. 
-When they are valid, they are added to a new block on the chain and identified by a one-way cryptographic algorithm, called a _hash_. 
-The one-way hash prevents transactions from being reverted. 
-[Blocks](https://docs.flare.network/tech/glossary/) are added to the [blockchain](https://docs.flare.network/tech/glossary/) in chronological order and it may take a few blocks for the hash to be completed.
-To prevent problems, we confirm deposits several blocks back (five blocks in our code), when the blocks are most likely to be irreversible.
+On a [blockchain](https://docs.flare.network/tech/glossary/), multiple [validators](https://docs.flare.network/tech/validators/) examine newly created transactions and decide on whether they are valid and which [block](https://docs.flare.network/tech/glossary/) to add to the chain next. 
+It takes time for all the validators to agree.
+While the validators are negotiating among themselves, blocks may be added or reverted. 
+To avoid the risk of a block being reverted after confirmation, confirm deposits several blocks back (for example, five blocks back as in the code below).
+Older blocks are less likely to be reversible.
 
-Newly submitted deposits to our receiving address are labeled "pending."
+Newly submitted deposits to the receiving address are labeled "pending."
 After five blocks have been created, valid deposits are labeled "confirmed."
 
-Run the javascript below to see pending and confirmed transactions and which block number they were added to.
+Run the code below to see pending and confirmed transactions and which block number they were added to.
 
 ## One-Time Setup
 
@@ -22,8 +22,10 @@ On the command line, run `node -v`  to check your installation.
 
 2. Clone the Flare repository: 
 
-`git clone https://github.com/flare-foundation/flare.git
-cd flare`
+```
+git clone https://github.com/flare-foundation/flare.git
+cd flare
+```
 
 See [the Flare repository on GitHub](https://github.com/flare-foundation/flare).
 
@@ -42,12 +44,14 @@ See [Adding web3.js](https://web3js.readthedocs.io).
 1. `cd` to `flare`
 
 2. Run the code: 
+`node <name of file>.js`
 
 The following code:
 
 * Sets up the deposit by instantiating `web3`, assigning the endpoint URL, and assigning the `receivingAddress`
-* Subscribes to 'pending transactions` to listen for deposit transactions and, if they are sent to the receiving address, labels them as "pending."
-* Subscribes to 'newBlockHeaders` to get a block that is five blocks back from the block with the pending transactiions and labels it as "confirmed."
+* Subscribes to `pending transactions` to listen for deposit transactions and, if they are sent to the receiving address, labels them as "pending."
+* Subscribes to `newBlockHeaders` to get a block that is five blocks back from the block with the pending transactions. 
+If they are sent to the receiving address, it labels each transaction as "confirmed" and provides the block number.
 
 ```javascript
 // You must have web3 installed 
@@ -66,7 +70,7 @@ web3.eth.subscribe("pendingTransactions")
 .on("data", async (transactionHash) => {
     // retrieve the transaction.
     let tx = await web3.eth.getTransaction(transactionHash);
-    // If it is directed to our address...
+    // If it is directed to the receiving address...
     if (tx.to === receivingAddress) {
         // mark it as pending.
         console.log("Transaction", tx.hash, "is pending");
@@ -84,7 +88,7 @@ web3.eth.subscribe("newBlockHeaders")
     block.transactions.forEach(async (transactionHash) => {
         // Retrieve the transaction...
         let tx = await web3.eth.getTransaction(transactionHash);
-        // If it is directed to our address...
+        // If it is directed to the receiving address...
         if (tx.to === receivingAddress) {
             // mark it as confirmed.
             console.log("Transaction", tx.hash,
