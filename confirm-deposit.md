@@ -1,17 +1,18 @@
 # Confirm Deposits to the Exchange
 
 Deposits are made in several stages. 
-One of the stages is to go through the [Exchange server](https://docs.flare.network/exchange/architecture/#architecture-of-an-exchange), which monitors for deposits and updates the Balances database. 
+After the user deposits funds to their assigned reception wallet (step 1 in [Detecting Deposits](https://docs.flare.network/exchange/architecture/#detecting-deposits)), it goes through the [Exchange server](https://docs.flare.network/exchange/architecture/#architecture-of-an-exchange), which monitors for deposits and updates the Balances database. 
 Run the code below to have the Exchange server listen for deposit transactions and confirm the deposits.
 
 On a [blockchain](https://docs.flare.network/tech/glossary/), multiple [validators](https://docs.flare.network/tech/validators/) examine newly created transactions and decide on whether they are valid and which [block](https://docs.flare.network/tech/glossary/) to add to the chain next. 
 It takes time for all the validators to agree.
-While the validators are negotiating among themselves, blocks may be added or reverted. 
+Until they reach agreement, validators may add or revert transactions to a block. 
+After the validation process is complete, blocks become irreversible. 
 To avoid the risk of a block being reverted after confirmation, confirm deposits several blocks back (for example, five blocks back as in the code below).
-Older blocks are less likely to be reversible.
+Validators are less likely to revert transactions on older blocks.
 
 Newly submitted deposits to the receiving address are labeled "pending."
-After five blocks have been created, valid deposits are labeled "confirmed."
+After five more blocks have been created, valid deposits are labeled "confirmed."
 
 Run the code below to see pending and confirmed transactions and which block number they were added to.
 
@@ -44,18 +45,20 @@ See [Adding web3.js](https://web3js.readthedocs.io).
 
 ## Run the Code
 
-1. `cd` to `flare`
-
-2. Run the code: 
-
-`node <name of file>.js`
-
 The following code:
 
 * Sets up the deposit by instantiating `web3`, assigning the endpoint URL, and assigning the `receivingAddress`
 * Subscribes to `pending transactions` to listen for deposit transactions and, if they are sent to the receiving address, labels them as "pending."
 * Subscribes to `newBlockHeaders` to get a block that is five blocks back from the block with the pending transactions. 
 If they are sent to the receiving address, it labels each transaction as "confirmed" and provides the block number.
+
+To run the code,
+
+1. Save the code to a .js file in your flare folder. 
+
+2. `cd` to `flare`
+
+3. Run `node <name of file>.js`
 
 ```javascript
 // You must have web3 installed 
@@ -109,8 +112,8 @@ You can see which transactions are pending and which are confirmed and the block
 For example,
 
 ```javascript
-Transaction 0xc3f3836b9fbe867d460b70258793e6601e4ffcb7f44203e8f40aca995ec21feb is pending
-Transaction 0xc3f3836b9fbe867d460b70258793e6601e4ffcb7f44203e8f40aca995ec21feb is confirmed in block 4305057
+Transaction 0x57b7c9e13836b32ac8a65e23f140fe5ab022894a7546393757043dd3c3b8e20c is pending
+Transaction 0x5819ad1bc4f5837c436599589e1ca2ddeac55c7a6c61908c1f64984887af43a3 is confirmed in block 4452518
 ```
 
 The server is ready to move on to the next step: Check the wallet address to find the user account it belongs to (step 3 of [Detecting Deposits](https://docs.flare.network/exchange/architecture/#detecting-deposits). 
