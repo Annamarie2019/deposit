@@ -20,28 +20,28 @@ Run the code below to see pending and confirmed transactions and which block num
 
 1. Install [node.js](https://nodejs.org/en/download/). 
 
-On the command line, run `node -v`  to check your installation.
+   On the command line, run `node -v`  to check your installation.
 
 2. Clone the Flare repository: 
 
-```
-git clone https://github.com/flare-foundation/flare.git
-cd flare
-```
+   ```
+   git clone https://github.com/flare-foundation/flare.git
+   cd flare
+   ```
 
-See [the Flare repository on GitHub](https://github.com/flare-foundation/flare).
+   See [the Flare repository on GitHub](https://github.com/flare-foundation/flare).
 
 3. Install the web3.js library: 
 
-`npm install web3`
+   `npm install web3`
 
-Run `npm web3 -v`  to check your installation.
+   Run `npm web3 -v`  to check your installation.
 
-See [Adding web3.js](https://web3js.readthedocs.io).
+   See [Adding web3.js](https://web3js.readthedocs.io).
 
 4. Build Flare with this script:
 
-`./scripts/build.sh`
+   `./scripts/build.sh`
 
 ## Run the Code
 
