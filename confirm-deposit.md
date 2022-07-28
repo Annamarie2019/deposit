@@ -56,54 +56,54 @@ To run the code,
 
 1. Save the code to a .js file in your flare folder. 
 
+   ```javascript
+   // You must have web3 installed 
+   const Web3 = require('web3');
+
+   // Test this code on the Coston testnet. Use your own node URL for actual runtime.
+   // https://docs.flare.network/dev/reference/coston-testnet/
+   const web3 = new Web3("wss://coston-api.flare.network/ext/bc/C/ws");
+
+   // This is the testnet receiving address. Use your receiving wallet address for actual runtime.
+   const receivingAddress = "0x947c76694491d3fD67a73688003c4d36C8780A97";
+
+   // Monitor for newly submitted deposit transactions.
+   web3.eth.subscribe("pendingTransactions")
+   // When a new transaction hash is received...
+   .on("data", async (transactionHash) => {
+       // retrieve the transaction.
+       let tx = await web3.eth.getTransaction(transactionHash);
+       // If it is directed to the receiving address...
+       if (tx.to === receivingAddress) {
+           // mark it as pending.
+           console.log("Transaction", tx.hash, "is pending");
+       }
+   }).on("error", console.error);
+
+   // Retrieve blocks 5 blocks back for confirmation.
+   web3.eth.subscribe("newBlockHeaders")
+   // When a new block has been produced...
+   .on("data", async (blockHeader) => {
+       // retrieve a block old enough to be considered confirmed.
+       let block = await web3.eth.getBlock(blockHeader.number - 5);
+
+       // Get all of its transactions.
+       block.transactions.forEach(async (transactionHash) => {
+           // Retrieve the transaction...
+           let tx = await web3.eth.getTransaction(transactionHash);
+           // If it is directed to the receiving address...
+           if (tx.to === receivingAddress) {
+               // mark it as confirmed.
+               console.log("Transaction", tx.hash,
+                   "is confirmed in block", block.number);
+           }
+       });
+   }).on("error", console.error);
+   ```
+
 2. `cd` to `flare`
 
 3. Run `node <name of file>.js`
-
-```javascript
-// You must have web3 installed 
-const Web3 = require('web3');
-
-// Test this code on the Coston testnet. Use your own node URL for actual runtime.
-// https://docs.flare.network/dev/reference/coston-testnet/
-const web3 = new Web3("wss://coston-api.flare.network/ext/bc/C/ws");
-
-// This is the testnet receiving address. Use your receiving wallet address for actual runtime.
-const receivingAddress = "0x947c76694491d3fD67a73688003c4d36C8780A97";
-
-// Monitor for newly submitted deposit transactions.
-web3.eth.subscribe("pendingTransactions")
-// When a new transaction hash is received...
-.on("data", async (transactionHash) => {
-    // retrieve the transaction.
-    let tx = await web3.eth.getTransaction(transactionHash);
-    // If it is directed to the receiving address...
-    if (tx.to === receivingAddress) {
-        // mark it as pending.
-        console.log("Transaction", tx.hash, "is pending");
-    }
-}).on("error", console.error);
-
-// Retrieve blocks 5 blocks back for confirmation.
-web3.eth.subscribe("newBlockHeaders")
-// When a new block has been produced...
-.on("data", async (blockHeader) => {
-    // retrieve a block old enough to be considered confirmed.
-    let block = await web3.eth.getBlock(blockHeader.number - 5);
-
-    // Get all of its transactions.
-    block.transactions.forEach(async (transactionHash) => {
-        // Retrieve the transaction...
-        let tx = await web3.eth.getTransaction(transactionHash);
-        // If it is directed to the receiving address...
-        if (tx.to === receivingAddress) {
-            // mark it as confirmed.
-            console.log("Transaction", tx.hash,
-                "is confirmed in block", block.number);
-        }
-    });
-}).on("error", console.error);
-```
 
 ### Outcome
 
