@@ -44,6 +44,7 @@ See [Adding web3.js](https://web3js.readthedocs.io).
 1. `cd` to `flare`
 
 2. Run the code: 
+
 `node <name of file>.js`
 
 The following code:
