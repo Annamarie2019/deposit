@@ -56,7 +56,7 @@ If they are sent to the receiving address, it labels each transaction as "confir
 
 To run the code,
 
-1. Save the code to a .txt file in your flare folder. 
+1. Save the code to a .js file in your flare folder. 
 
    ```javascript
    // You must have web3 installed 
@@ -108,7 +108,7 @@ To run the code,
 3. Run: 
 
    ```
-   node <name of file>.txt
+   node <name of file>.js
    ```
 
 ## Outcome
