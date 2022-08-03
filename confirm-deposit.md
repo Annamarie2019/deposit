@@ -12,7 +12,7 @@ To avoid the risk of accepting a deposit from a block that could be later revert
 Newly submitted deposits to the receiving address are labeled "pending."
 After five more blocks have been created, valid deposits are then labeled "confirmed."
 
-Run the code below to see pending and confirmed transactions and which block number they were added to.
+Run the javascript below to see pending and confirmed transactions and which block number they were added to.
 
 ## One-Time Setup
 
