@@ -95,7 +95,7 @@ To run the code,
            let tx = await web3.eth.getTransaction(transactionHash);
            // If it is directed to the receiving address...
            if (tx.to === receivingAddress) {
-               // mark it as confirmed.
+               // mark it as confirmed and display the block number.
                console.log("Transaction", tx.hash,
                    "is confirmed in block", block.number);
            }
