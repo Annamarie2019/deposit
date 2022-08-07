@@ -117,7 +117,7 @@ You can see which transactions are pending and which are confirmed and the block
 
 For example,
 
-```
+```text
 Transaction 0x57b7c9e13836b32ac8a65e23f140fe5ab022894a7546393757043dd3c3b8e20c is pending
 Transaction 0x5819ad1bc4f5837c436599589e1ca2ddeac55c7a6c61908c1f64984887af43a3 is confirmed in block 4452518
 ```
